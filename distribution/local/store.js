@@ -40,7 +40,7 @@ const store = {
             let filePath = path.join(storeDirectory, effectiveKey);
             fs.writeFile(filePath, serialization.serialize(value), (err) => {
                 if (err) {
-                    callback(Error("Some node error"), null);
+                    callback(Error("error in put"), null);
                 } else {
                     callback(null, key); // Success
                 }
@@ -54,7 +54,7 @@ const store = {
             let filePath = path.join(storeDirectory, sanitizeKey(key));
             fs.readFile(filePath, (err, data) => {
                 if (err) {
-                    callback(Error("Some node error"), null);
+                    callback(Error("error in get"), null);
                 } else {
                     callback(null, JSON.parse(data)); // Success
                 }
@@ -68,13 +68,13 @@ const store = {
             let filePath = path.join(storeDirectory, sanitizeKey(key));
             fs.unlink(filePath, (err) => {
                 if (err) {
-                    callback(Error("Some node error"), null);
+                    callback(Error("error in del"), null);
                 } else {
                     callback(null, { message: "Deleted successfully" }); // Success
                 }
             });
         } catch (e) {
-            callback(Error("Some node error"), null);
+            callback(Error("error in del 2"), null);
         }
     }
 };
